@@ -4,31 +4,44 @@
 */
 .extensionIconPopupMenu {
     --popupWidth: 200px !important;
-    z-index: 5;
-}
-.extensionIconPopupMenu > .toolbar {
-    max-height: 50vh;
-    overflow: hidden auto;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: stretch;
-}
-.extensionIconPopupMenu .ExtensionDropdownIcon > button {
-    justify-content: flex-start;
-    padding: 8px 10px;
-}
-.extensionIconPopupMenu .ExtensionDropdownIcon > button::after {
-    content: attr(title);
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
+    > .toolbar {
+        max-height: 50vh;
+        overflow: hidden auto;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+    }
+
+    .ExtensionDropdownIcon > button {
+        justify-content: flex-start;
+        padding: 8px 10px;
+
+        &::after {
+            content: attr(title);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
 
 /**
  * Hide extensions
  */
-button[title="Speed Dial Generator"], button[title="Modern scrollbar"], button[title="Vivaldi Forum mod"],
-button[title="Scrollbar of Contents"], button[title="datacy"], button[title*="Coupert"], button[title="PayPal Honey"], button[title="Tampermonkey"],
-button[title^="Acrobat"], button[title^="Violentmonkey"], button[title="Custom Scrollbars"] {
+.toolbar-extensions
+    button:where(
+        [title='Speed Dial Generator'],
+        [title='Modern scrollbar'],
+        [title='Vivaldi Forum mod'],
+        [title='Scrollbar of Contents'],
+        [title='datacy'],
+        [title*='Coupert'],
+        [title='PayPal Honey'],
+        [title='Tampermonkey'],
+        [title^='Acrobat'],
+        [title^='Violentmonkey'],
+        [title='Custom Scrollbars'],
+        [title='modern scroll']
+    ) {
     display: none !important;
 }

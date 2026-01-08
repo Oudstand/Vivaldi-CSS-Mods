@@ -5,12 +5,15 @@
 #app:not(.fullscreen-listener-enabled):has(#switch button[title="automate-bookmark-bar"]) .bookmark-bar-top:not(:has(.toolbar-editor)) {
     .bookmark-bar {
         margin-bottom: -36px;
+        margin-left: 40px;
+        margin-right: 7px;
         height: 33px !important;
-        z-index: 4;
+        z-index: 3;
         transform: translateY(0);
         transition: transform .45s ease-out .25s, opacity .45s ease-out .25s !important;
         padding-bottom: 3px;
     }
+
     .bookmark-bar:not(:focus-within):not(:hover) {
         transform: translateY(-75%);
         opacity: 0;

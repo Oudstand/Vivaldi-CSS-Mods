@@ -142,8 +142,8 @@
     content: '';
     position: absolute;
     height: var(--edge-like-border-radius);
-    left: calc(var(--edge-like-border-radius) / -4 - 0.1px);
-    right: 0;
+    left: calc(var(--edge-like-border-radius) * -2 / 5);
+    right: calc(var(--edge-like-border-radius) * -2 / 5);
     bottom: calc(var(--edge-like-border-radius) * -1 - 1px);
     border: calc(var(--edge-like-border-radius) / 2) solid var(--colorAccentBg);
     border-bottom: none;

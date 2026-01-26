@@ -47,3 +47,10 @@
 .dashboard-widget .url-wrapper {
     display: none;
 }
+
+/** adjust radius of emails */
+#mail_view .tree-item:not(.group)[aria-level='1'] .tree-row {
+    border-radius: var(--radius);
+    margin-left: 3px;
+    margin-right: 3px;
+}

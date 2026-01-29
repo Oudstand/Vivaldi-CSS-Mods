@@ -16,6 +16,7 @@
 
 .vivaldi {
     width: 40px;
+    min-width: 40px;
     margin-left: 0px !important;
     display: block !important;
 

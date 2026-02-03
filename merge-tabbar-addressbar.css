@@ -91,14 +91,3 @@
         }
     }
 }
-
-/* correct positioning for fullscreen mod */
-.fullscreen-listener-enabled {
-    #header .vivaldi {
-        margin-top: 6px !important;
-    }
-
-    #main {
-        position: absolute;
-    }
-}

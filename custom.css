@@ -22,10 +22,10 @@
 }
 
 /** adjusts the border radius of the close button of a tab and the status info according to themes settings */
-.tab .close, .StatusInfo-Content {
+.tab .close,
+.StatusInfo-Content {
     border-radius: var(--radius) !important;
 }
-
 
 /** adjust calendar */
 .cal-event-header {
@@ -35,7 +35,7 @@
 }
 
 .all-day {
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
 }
 
 .all-day .cal-event-header {

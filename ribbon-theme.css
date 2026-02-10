@@ -55,12 +55,18 @@ footer,
     }
 }
 
-.tab-indicator {
-    background-color: var(--colorHighlightFgAlphaHeavy) !important;
+.tab-group-indicator {
+    top: -3px !important;
+    padding-left: var(--densityGap) !important;
+    padding-right: var(--densityGap) !important;
 
-    &.active {
-        background-color: var(--colorHighlightFgAlpha) !important;
-        border-bottom-width: 3px !important;
+    .tab-indicator {
+        background-color: var(--colorHighlightFgAlphaHeavy) !important;
+
+        &.active {
+            background-color: var(--colorHighlightFgAlpha) !important;
+            border-bottom-width: 3px !important;
+        }
     }
 }
 
@@ -155,10 +161,4 @@ footer {
 
 .find-in-page-wrapper {
     background-color: var(--ribbon-theme-background-color);
-}
-
-.maximized {
-    .tab-group-indicator {
-        top: -5px !important;
-    }
 }

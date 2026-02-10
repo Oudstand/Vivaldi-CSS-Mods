@@ -10,10 +10,6 @@
     --address-bar-width-focused: 40vw;
 }
 
-#browser.maximized #header > * {
-    margin-top: 6px;
-}
-
 .vivaldi {
     width: 40px;
     min-width: 40px;
@@ -40,7 +36,8 @@
 }
 
 #browser:not(.toolbar-edit-mode):not(:has(.toolbar-mailbar:not(.toolbar-hidden))) #tabs-container {
-    .button-toolbar:has(button[name*="Mail"]), .MailSearchField {
+    .button-toolbar:has(button[name*='Mail']),
+    .MailSearchField {
         display: none;
 
         & + .toolbar-spacer {
@@ -50,7 +47,8 @@
 }
 
 #browser:not(.toolbar-edit-mode):has(.toolbar-mailbar.toolbar-visible) #tabs-container {
-    .button-toolbar:not(:has(button[name*="Mail"]), :has(button[name*="NewTab"]), .toolbar-spacer), .UrlBar-AddressField {
+    .button-toolbar:not(:has(button[name*='Mail']), :has(button[name*='NewTab']), .toolbar-spacer),
+    .UrlBar-AddressField {
         display: none;
 
         & + .toolbar-spacer {
@@ -67,7 +65,7 @@
     position: relative;
     overflow: visible;
 
-    .button-toolbar:has( + .UrlBar-AddressField) {
+    .button-toolbar:has(+ .UrlBar-AddressField) {
         margin-right: calc(max(var(--address-bar-width), var(--address-bar-min-width)) + 1vw);
     }
 
@@ -79,7 +77,12 @@
         width: max(var(--address-bar-width), var(--address-bar-min-width));
         right: 0;
         margin-right: 0.5rem;
-        transition: width 0.2s ease-in-out, height 0.2s ease-in-out, margin-top 0.2s ease-in-out, right 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+        transition:
+            width 0.2s ease-in-out,
+            height 0.2s ease-in-out,
+            margin-top 0.2s ease-in-out,
+            right 0.2s ease-in-out,
+            box-shadow 0.2s ease-in-out !important;
 
         &:focus-within {
             height: 34px;
@@ -87,7 +90,9 @@
             right: calc(max(var(--address-bar-min-width), var(--address-bar-width)) - var(--address-bar-width-focused));
             margin-top: -3px;
             background-color: var(--colorBg);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            box-shadow:
+                0 10px 20px rgba(0, 0, 0, 0.19),
+                0 6px 6px rgba(0, 0, 0, 0.23);
         }
     }
 }

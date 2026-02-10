@@ -7,14 +7,34 @@
     --ribbon-theme-background-color: var(--colorBgAlphaBlur); /* --colorAccentBgDark */
 }
 
-#browser, #header, #tabs-tabbar-container, .tab.active, .mainbar, .bookmark-bar, #main, #webpage-stack, #webpage-stack::before, .SlideBar,
-.panel-group::before, .toolbar-mainbar, #panels-container, #panels-container, .YBDomainButton, .YBDomain::after, footer, .toolbar-extensions {
-    transition: background-color 0.5s, border-color 0.5s, outline 0.5s, box-shadow 0.5s, color 0.5s !important;
+#browser,
+#header,
+#tabs-tabbar-container,
+.tab.active,
+.mainbar,
+.bookmark-bar,
+#main,
+#webpage-stack,
+#webpage-stack::before,
+.SlideBar,
+.panel-group::before,
+.toolbar-mainbar,
+#panels-container,
+#panels-container,
+.YBDomainButton,
+.YBDomain::after,
+footer,
+.toolbar-extensions {
+    transition:
+        background-color 0.5s,
+        border-color 0.5s,
+        outline 0.5s,
+        box-shadow 0.5s,
+        color 0.5s !important;
 }
 
 #app:not(.fullscreen-listener-enabled) .bookmark-bar-top-off .inner > * {
     padding-top: calc(var(--edge-like-border-radius) / 4);
-
 }
 
 #app:not(.fullscreen-listener-enabled) #browser:not(.fullscreen, .bookmark-bar-top-off):not(.popup) .inner > * {
@@ -24,7 +44,6 @@
 .UrlBar-AddressField {
     background-color: var(--ribbon-theme-background-color) !important;
 }
-
 
 .tab {
     border-radius: var(--radiusHalf) !important;
@@ -45,7 +64,8 @@
     }
 }
 
-.toolbar-mainbar > .button-toolbar, .toolbar-extensions .button-toolbar {
+.toolbar-mainbar > .button-toolbar,
+.toolbar-extensions .button-toolbar {
     color: var(--colorAccentFg);
 }
 
@@ -63,14 +83,17 @@
     }
 }
 
-#browser:not(.fullscreen):is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container, .fullscreen-listener-enabled #browser:not(.fullscreen) #panels-container {
-    &.icons, &.overlay {
+#browser:not(.fullscreen):is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container,
+.fullscreen-listener-enabled #browser:not(.fullscreen) #panels-container {
+    &.icons,
+    &.overlay {
         width: 41px !important;
     }
 }
 
 #browser:not(.fullscreen).density-on:is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container {
-    &.icons, &.overlay {
+    &.icons,
+    &.overlay {
         width: 46px !important;
     }
 }
@@ -98,7 +121,6 @@
             background-color: var(--colorAccentBgAlphaHeavy) !important;
         }
 
-
         .button-toolbar > button:hover {
             background: transparent;
             color: unset;
@@ -111,12 +133,12 @@
             min-width: 100% !important;
             .panel {
                 /*                background-color: var(--ribbon-theme-background-color) !important;*/
-                .webpanel-header, .webpanel-content {
+                .webpanel-header,
+                .webpanel-content {
                     background-color: var(--ribbon-theme-background-color);
                 }
             }
         }
-
     }
 }
 
@@ -138,11 +160,5 @@ footer {
 .maximized {
     .tab-group-indicator {
         top: -5px !important;
-        padding-left: calc(var(--radiusHalf) + var(--densityGap)) !important;
-        padding-right: calc(var(--radiusHalf) + var(--densityGap)) !important;
-    }
-
-    .tab-indicator {
-        border-bottom-width: 6px !important;
     }
 }

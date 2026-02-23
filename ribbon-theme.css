@@ -20,7 +20,6 @@
 .panel-group::before,
 .toolbar-mainbar,
 #panels-container,
-#panels-container,
 .YBDomainButton,
 .YBDomain::after,
 footer,
@@ -33,12 +32,14 @@ footer,
         color 0.5s !important;
 }
 
-#app:not(.fullscreen-listener-enabled) .bookmark-bar-top-off .inner > * {
-    padding-top: calc(var(--edge-like-border-radius) / 4);
-}
+#app:not(.fullscreen-listener-enabled) {
+    .bookmark-bar-top-off .inner > * {
+        padding-top: calc(var(--edge-like-border-radius) / 4);
+    }
 
-#app:not(.fullscreen-listener-enabled) #browser:not(.fullscreen, .bookmark-bar-top-off):not(.popup) .inner > * {
-    padding-top: calc(var(--edge-like-border-radius) / 2);
+    #browser:not(.fullscreen, .bookmark-bar-top-off):not(.popup) .inner > * {
+        padding-top: calc(var(--edge-like-border-radius) / 2);
+    }
 }
 
 .UrlBar-AddressField {
@@ -57,8 +58,7 @@ footer,
 
 .tab-group-indicator {
     top: -3px !important;
-    padding-left: var(--densityGap) !important;
-    padding-right: var(--densityGap) !important;
+    padding-inline: var(--densityGap) !important;
 
     .tab-indicator {
         background-color: var(--colorHighlightFgAlphaHeavy) !important;
@@ -66,6 +66,14 @@ footer,
         &.active {
             background-color: var(--colorHighlightFgAlpha) !important;
             border-bottom-width: 3px !important;
+        }
+    }
+
+    .maximized & {
+        top: 0 !important;
+
+        .tab-indicator.active {
+            border-bottom-width: 6px !important;
         }
     }
 }
@@ -89,18 +97,20 @@ footer,
     }
 }
 
-#browser:not(.fullscreen):is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container,
-.fullscreen-listener-enabled #browser:not(.fullscreen) #panels-container {
-    &.icons,
-    &.overlay {
-        width: 41px !important;
+#browser:not(.fullscreen) {
+    &:is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container,
+    .fullscreen-listener-enabled & #panels-container {
+        &.icons,
+        &.overlay {
+            width: 41px !important;
+        }
     }
-}
 
-#browser:not(.fullscreen).density-on:is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container {
-    &.icons,
-    &.overlay {
-        width: 46px !important;
+    &.density-on:is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container {
+        &.icons,
+        &.overlay {
+            width: 46px !important;
+        }
     }
 }
 
@@ -120,25 +130,28 @@ footer,
 
     #switch {
         background-color: var(--ribbon-theme-background-color) !important;
-        margin: 0rem 0.2rem 0.5rem 0.2rem;
+        margin: 0 0.2rem 0.5rem 0.2rem;
         border-radius: var(--radius);
 
-        .button-toolbar:not(.toolbar-spacer):not(.toolbar-divider):not(.toolbar-spacer-flexible):hover {
-            background-color: var(--colorAccentBgAlphaHeavy) !important;
-        }
+        .button-toolbar {
+            &:not(.toolbar-spacer, .toolbar-divider, .toolbar-spacer-flexible):hover {
+                background-color: var(--colorAccentBgAlphaHeavy) !important;
+            }
 
-        .button-toolbar > button:hover {
-            background: transparent;
-            color: unset;
+            > button:hover {
+                background: transparent;
+                color: unset;
+            }
         }
     }
 
     .panel-group {
         left: 41px !important;
+
         .panel-collapse-guard {
             min-width: 100% !important;
+
             .panel {
-                /*                background-color: var(--ribbon-theme-background-color) !important;*/
                 .webpanel-header,
                 .webpanel-content {
                     background-color: var(--ribbon-theme-background-color);

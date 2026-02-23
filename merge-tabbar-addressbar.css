@@ -10,6 +10,10 @@
     --address-bar-width-focused: 40vw;
 }
 
+.maximized #header {
+    padding-top: 5px;
+}
+
 .vivaldi {
     width: 40px;
     min-width: 40px;

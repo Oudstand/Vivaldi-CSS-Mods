@@ -70,7 +70,7 @@ footer,
     }
 
     .maximized & {
-        top: 0 !important;
+        top: -1px !important;
 
         .tab-indicator.active {
             border-bottom-width: 6px !important;

@@ -152,10 +152,7 @@ footer,
             min-width: 100% !important;
 
             .panel {
-                .webpanel-header,
-                .webpanel-content {
-                    background-color: var(--ribbon-theme-background-color);
-                }
+                background-color: var(--ribbon-theme-background-color);
             }
         }
     }

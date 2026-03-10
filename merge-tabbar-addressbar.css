@@ -61,6 +61,10 @@
     }
 }
 
+#browser:not(.toolbar-edit-mode) .toolbar-mainbar:empty {
+    display: none;
+}
+
 #tabs-container .toolbar:has(.UrlBar-AddressField) {
     z-index: 7;
 }

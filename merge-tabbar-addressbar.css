@@ -40,7 +40,7 @@
 }
 
 #browser:not(.toolbar-edit-mode):not(:has(.toolbar-mailbar:not(.toolbar-hidden))) #tabs-container {
-    .button-toolbar:has(button[name*='Mail']),
+    .button-toolbar:has(button[data-name*='Mail']),
     .MailSearchField {
         display: none;
 
@@ -51,7 +51,7 @@
 }
 
 #browser:not(.toolbar-edit-mode):has(.toolbar-mailbar.toolbar-visible) #tabs-container {
-    .button-toolbar:not(:has(button[name*='Mail']), :has(button[name*='NewTab']), .toolbar-spacer),
+    .button-toolbar:not(:has(button[data-name*='Mail']), :has(button[data-name*='NewTab']), .toolbar-spacer),
     .UrlBar-AddressField {
         display: none;
 

@@ -151,9 +151,9 @@ footer,
         .panel-collapse-guard {
             min-width: 100% !important;
 
-            .panel {
+            /* .panel {
                 background-color: var(--ribbon-theme-background-color);
-            }
+            } */
         }
     }
 }

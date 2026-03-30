@@ -5,7 +5,7 @@
 
 /** adaptes the border of the toolbar buttons to the selected theme */
 .button-toolbar > button {
-    border-radius: var(--radius) !important;
+    border-radius: var(--radius);
 }
 
 /** hides the loading progress */

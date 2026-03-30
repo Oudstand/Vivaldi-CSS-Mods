@@ -39,27 +39,27 @@
     }
 }
 
-.webpanel {
+/* .webpanel {
     background-color: var(--colorAccentBg);
 }
 
 .webpanel-header {
     background-color: var(--colorBgAlphaBlur);
-}
+} */
 
-#browser:not(.toolbar-edit-mode) {
-    .button-toolbar:has(button[title="automate-bookmark-bar"]) {
-        display: none;
-    }
+#browser:not(.toolbar-edit-mode) .button-toolbar:has(button[title='automate-bookmark-bar']) {
+    display: none;
 }
 
 /** add hover effect to speed dials and web panels */
-.dial, #switch .button-toolbar:not(.active) {
+.dial,
+#switch .button-toolbar:not(.active) {
     opacity: 0.66 !important;
-    transition: opacity .25s !important;
+    transition: opacity 0.25s !important;
 }
 
-.dial:hover, #switch .button-toolbar:hover {
+.dial:hover,
+#switch .button-toolbar:hover {
     opacity: 1 !important;
 }
 

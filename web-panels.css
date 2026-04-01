@@ -16,7 +16,7 @@
         flex: 0 !important;
     }
 
-    button[name='UpdateButton'] .button-title {
+    button[data-name='UpdateButton'] .button-title {
         display: none;
     }
 

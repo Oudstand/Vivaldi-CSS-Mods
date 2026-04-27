@@ -1,0 +1,95 @@
+/**
+ * Safari compact address bar
+ * Works together with JS/safari-compact-addressbar.js.
+ */
+
+#browser.safari-compact-addressbar:not(.toolbar-edit-mode) {
+    #tabs-container > .toolbar-tabbar-before > .UrlBar-AddressField {
+        display: none;
+    }
+
+    #tabs-tabbar-container .tab-position.safari-compact-addressbar-tab-position {
+        z-index: 100 !important;
+    }
+
+    #tabs-tabbar-container .tab-position.safari-compact-addressbar-tab-position .tab {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .tab.safari-compact-addressbar-tab {
+        .tab-header {
+            opacity: 0;
+        }
+
+        > .UrlBar-AddressField.safari-compact-addressbar-field {
+            position: absolute !important;
+            z-index: 3;
+            inset: 0;
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            height: 100%;
+            margin: 0 !important;
+            border-color: transparent;
+            border-radius: var(--currentRadius, var(--radius)) !important;
+            background-color: var(--colorAccentBg);
+            color: var(--colorAccentFg);
+            box-shadow: none !important;
+            outline: none;
+            transform: none !important;
+
+            &:focus-within {
+                width: 100% !important;
+                height: 100%;
+                right: auto;
+                margin-top: 0;
+                background-color: var(--colorBg);
+                color: var(--colorFg);
+                outline: 2px solid var(--colorAccentBgFadedMost);
+                outline-offset: -2px;
+                box-shadow: none !important;
+                transform: none !important;
+            }
+
+            .UrlBar-UrlFieldWrapper,
+            .UrlFragment-Wrapper {
+                min-width: 0;
+            }
+
+            .BookmarkButton,
+            .ContentBlocker-Control:not([aria-expanded='true']),
+            .drop-down-menu {
+                display: none;
+            }
+        }
+    }
+}
+
+#browser.safari-compact-addressbar-open:not(.toolbar-edit-mode) #tabs-tabbar-container .tab-position {
+    transition:
+        transform 0.18s ease-in-out,
+        width 0.18s ease-in-out;
+}
+
+#browser:not(.toolbar-edit-mode):not(:has(.toolbar-mailbar:not(.toolbar-hidden))) #tabs-container {
+    .button-toolbar:has(button[data-name*='Mail']),
+    .MailSearchField {
+        display: none;
+
+        & + .toolbar-spacer {
+            display: none;
+        }
+    }
+}
+
+#browser:not(.toolbar-edit-mode):has(.toolbar-mailbar.toolbar-visible) #tabs-container {
+    .button-toolbar:not(:has(button[data-name*='Mail']), :has(button[data-name*='NewTab']), .toolbar-spacer),
+    .UrlBar-AddressField {
+        display: none;
+
+        & + .toolbar-spacer {
+            display: none;
+        }
+    }
+}

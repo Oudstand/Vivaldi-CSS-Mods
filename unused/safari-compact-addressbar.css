@@ -4,72 +4,92 @@
  */
 
 #browser.safari-compact-addressbar:not(.toolbar-edit-mode) {
-    #tabs-container > .toolbar-tabbar-before > .UrlBar-AddressField {
+    #tabs-container > .toolbar-tabbar-before > .UrlBar-AddressField:not(.safari-compact-addressbar-field) {
         display: none;
-    }
-
-    #tabs-tabbar-container .tab-position.safari-compact-addressbar-tab-position {
-        z-index: 100 !important;
-    }
-
-    #tabs-tabbar-container .tab-position.safari-compact-addressbar-tab-position .tab {
-        width: 100% !important;
-        max-width: none !important;
     }
 
     .tab.safari-compact-addressbar-tab {
         .tab-header {
             opacity: 0;
         }
+    }
 
-        > .UrlBar-AddressField.safari-compact-addressbar-field {
-            position: absolute !important;
-            z-index: 3;
-            inset: 0;
-            width: 100% !important;
-            min-width: 0 !important;
-            max-width: none !important;
-            height: 100%;
-            margin: 0 !important;
-            border-color: transparent;
-            border-radius: var(--currentRadius, var(--radius)) !important;
-            background-color: var(--colorAccentBg);
-            color: var(--colorAccentFg);
+    .UrlBar-AddressField.safari-compact-addressbar-field {
+        position: fixed !important;
+        z-index: 1001;
+        left: var(--safariCompactFieldLeft);
+        top: var(--safariCompactFieldTop);
+        display: flex !important;
+        box-sizing: border-box;
+        width: var(--safariCompactFieldWidth) !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        height: var(--safariCompactFieldHeight);
+        margin: 0 !important;
+        border-color: transparent;
+        border-radius: var(--currentRadius, var(--radius)) !important;
+        background-color: var(--colorAccentBg);
+        color: var(--colorAccentFg);
+        box-shadow: none !important;
+        outline: none;
+        transform: none !important;
+
+        &:focus-within {
+            width: var(--safariCompactFieldWidth) !important;
+            height: var(--safariCompactFieldHeight);
+            right: auto;
+            margin-top: 0;
+            background-color: var(--colorBg);
+            color: var(--colorFg);
+            outline: 2px solid var(--colorAccentBgFadedMost);
+            outline-offset: -2px;
             box-shadow: none !important;
-            outline: none;
             transform: none !important;
+        }
 
-            &:focus-within {
-                width: 100% !important;
-                height: 100%;
-                right: auto;
-                margin-top: 0;
-                background-color: var(--colorBg);
-                color: var(--colorFg);
-                outline: 2px solid var(--colorAccentBgFadedMost);
-                outline-offset: -2px;
-                box-shadow: none !important;
-                transform: none !important;
-            }
+        .UrlBar-UrlFieldWrapper,
+        .UrlFragment-Wrapper {
+            min-width: 0;
+        }
 
-            .UrlBar-UrlFieldWrapper,
-            .UrlFragment-Wrapper {
-                min-width: 0;
-            }
+        .OmniDropdown {
+            top: -2px;
+            left: -2px;
+            right: -2px;
+        }
 
-            .BookmarkButton,
-            .ContentBlocker-Control:not([aria-expanded='true']),
-            .drop-down-menu {
-                display: none;
-            }
+        .BookmarkButton,
+        .ContentBlocker-Control:not([aria-expanded='true']) {
+            display: none;
         }
     }
 }
 
-#browser.safari-compact-addressbar-open:not(.toolbar-edit-mode) #tabs-tabbar-container .tab-position {
+#browser:is(.safari-compact-addressbar-open, .safari-compact-addressbar-closing):not(.toolbar-edit-mode) #tabs-tabbar-container:is(.top, .bottom) #tabs-container .tab-position {
     transition:
-        transform 0.18s ease-in-out,
-        width 0.18s ease-in-out;
+        transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+        width 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+#browser:is(.safari-compact-addressbar-open, .safari-compact-addressbar-closing):not(.toolbar-edit-mode) .tab-header {
+    transition: opacity 0.12s ease-out;
+}
+
+#browser.safari-compact-addressbar-open:not(.toolbar-edit-mode) .tab.safari-compact-addressbar-tab {
+    .tab-header {
+        transition: opacity 0.12s ease-out;
+    }
+}
+
+#browser:is(.safari-compact-addressbar-open, .safari-compact-addressbar-closing):not(.toolbar-edit-mode) .UrlBar-AddressField.safari-compact-addressbar-field {
+    transition:
+        left 0.2s cubic-bezier(0.2, 0, 0, 1),
+        top 0.2s cubic-bezier(0.2, 0, 0, 1),
+        width 0.2s cubic-bezier(0.2, 0, 0, 1),
+        height 0.2s cubic-bezier(0.2, 0, 0, 1),
+        background-color 0.12s ease-out,
+        color 0.12s ease-out,
+        outline-color 0.12s ease-out;
 }
 
 #browser:not(.toolbar-edit-mode):not(:has(.toolbar-mailbar:not(.toolbar-hidden))) #tabs-container {
@@ -85,7 +105,7 @@
 
 #browser:not(.toolbar-edit-mode):has(.toolbar-mailbar.toolbar-visible) #tabs-container {
     .button-toolbar:not(:has(button[data-name*='Mail']), :has(button[data-name*='NewTab']), .toolbar-spacer),
-    .UrlBar-AddressField {
+    .UrlBar-AddressField:not(.safari-compact-addressbar-field) {
         display: none;
 
         & + .toolbar-spacer {

@@ -1,16 +1,39 @@
+/* Dialog tab styles
+ * Forum link: https://forum.vivaldi.net/topic/92501/open-in-dialog-mod?_=1717490394230
+ */
 @keyframes dialog-tab-open-anchored {
-    from { opacity: 0; transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1)); filter: blur(3px); }
-    to { opacity: 1; transform: translate(0px, 0px) scale(1); filter: blur(0px); }
+    from {
+        opacity: 0;
+        transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1));
+        filter: blur(3px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0px, 0px) scale(1);
+        filter: blur(0px);
+    }
 }
 
 @keyframes dialog-tab-close-anchored {
-    from { opacity: 1; transform: translate(0px, 0px) scale(1); filter: blur(0px); }
-    to { opacity: 0; transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1)); filter: blur(2px); }
+    from {
+        opacity: 1;
+        transform: translate(0px, 0px) scale(1);
+        filter: blur(0px);
+    }
+    to {
+        opacity: 0;
+        transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1));
+        filter: blur(2px);
+    }
 }
 
 @keyframes dialog-tab-animate-progress-bar {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(100%); }
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
 }
 
 .dialog-container {
@@ -26,7 +49,7 @@
     align-items: center;
 
     &.is-open {
-        background-color: rgba(0, 0, 0, .4);
+        background-color: rgba(0, 0, 0, 0.4);
     }
     &.is-leave {
         pointer-events: none;
@@ -69,12 +92,29 @@
             color: white;
             z-index: 1160;
             width: 100%;
+            box-sizing: border-box;
+            padding: 0 0.5rem;
+            opacity: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: opacity 300ms ease;
+        }
+
+        .options-container.fade-out {
+            opacity: 0;
+        }
+
+        .options-container.showing-options {
+            overflow: visible;
         }
 
         .options-button {
             display: flex;
+            position: relative;
             background: transparent;
             border: none;
+            border-radius: var(--rounding, var(--radiusHalf));
             cursor: pointer;
             width: 35px;
             height: 35px;
@@ -87,10 +127,35 @@
             background-color: var(--colorBgAlphaHeavy);
         }
 
+        .options-button[data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--colorAccentBg);
+            color: var(--colorAccentFg);
+            font-size: 12px;
+            padding: 4px 8px;
+            border: 1px solid var(--colorAccentFgAlpha);
+            border-radius: var(--radiusHalf);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 150ms ease;
+            white-space: nowrap;
+            z-index: 1161;
+        }
+
+        .options-button[data-tooltip]:hover::after {
+            opacity: 1;
+            transition-delay: 800ms;
+        }
+
         .dialog-input {
             background: var(--colorAccentBgAlpha);
             color: white;
             border: none;
+            border-radius: var(--inputRadius, var(--radiusHalf));
             margin: 0 0.5rem;
             padding: 0.25rem 0.5rem;
             flex: 0 0 20%;
@@ -108,18 +173,13 @@
             position: relative;
 
             &.is-complete::after {
-                content: "";
+                content: '';
                 position: absolute;
                 top: 0;
                 left: 0;
                 height: 100%;
                 width: 50%;
-                background-image: linear-gradient(
-                    to right,
-                    rgba(255, 255, 255, 0.5),
-                    rgba(255, 255, 255, 0.8),
-                    rgba(255, 255, 255, 0.5)
-                );
+                background-image: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
                 transform: translateX(-100%);
                 animation: dialog-tab-animate-progress-bar 1.5s linear infinite;
                 will-change: transform;

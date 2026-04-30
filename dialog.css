@@ -109,6 +109,14 @@
             overflow: visible;
         }
 
+        .options-title {
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         .options-button {
             display: flex;
             position: relative;

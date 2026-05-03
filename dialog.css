@@ -201,6 +201,166 @@
             border-radius: var(--radius);
         }
 
+        .dialog-reader-toolbar {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 100%;
+            height: 0;
+            padding: 0 6px;
+            overflow: hidden;
+            opacity: 0.01;
+            color: var(--colorFg);
+            background-color: var(--colorBgLightIntense, var(--colorBg));
+            border-bottom: 1px solid var(--colorBorder);
+            border-radius: var(--radius) var(--radius) 0 0;
+            box-sizing: border-box;
+            pointer-events: none;
+            transition:
+                height 100ms ease-out,
+                opacity 100ms ease-out;
+            z-index: 1;
+        }
+
+        .dialog-reader-toolbar.reader-toolbar-enter-active {
+            height: 40px;
+            opacity: 1;
+            pointer-events: auto;
+            transition:
+                height 200ms ease-out,
+                opacity 200ms ease-out;
+        }
+
+        .dialog-reader-toolbar .toolbar-group {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            height: 28px;
+            margin: 0 2px;
+            border: 1px solid color-mix(in srgb, var(--colorBorder) 55%, transparent);
+            border-radius: var(--radius);
+        }
+
+        .dialog-reader-toolbar .button-toolbar {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .dialog-reader-toolbar .button-toolbar + .button-toolbar > button {
+            border-left-width: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .dialog-reader-toolbar .button-toolbar:not(:last-child) > button {
+            border-right-width: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .dialog-reader-toolbar .button-toolbar > button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            margin: 0;
+            padding: 0 6px;
+            color: inherit;
+            fill: currentColor;
+            background-color: transparent;
+            background-image: none;
+            border: 1px solid color-mix(in srgb, var(--colorBorder) 45%, transparent);
+            border-radius: var(--radius);
+            box-shadow: none;
+            text-shadow: none;
+        }
+
+        .dialog-reader-toolbar .button-toolbar > button:hover,
+        .dialog-reader-toolbar .button-toolbar > button:active,
+        .dialog-reader-toolbar .button-toolbar > button.button-pressed {
+            background-color: var(--colorBgDark, var(--colorBgAlpha));
+        }
+
+        .dialog-reader-toolbar svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .dialog-reader-toolbar .decrease-font-size svg {
+            transform: scale(0.8);
+        }
+
+        .dialog-reader-toolbar .increase-font-size svg {
+            transform: scale(1.2);
+        }
+
+        .dialog-reader-settings-toggle {
+            display: none;
+            position: absolute;
+            top: 43px;
+            right: calc(16px + 6px);
+            z-index: 2;
+            width: 32px;
+            height: 32px;
+        }
+
+        .dialog-reader-settings-toggle > button,
+        .dialog-reader-settings-toggle > button:active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            padding: 0;
+            color: var(--colorFg);
+            fill: currentColor;
+            background-color: transparent;
+            border: 0;
+            box-shadow: none;
+        }
+
+        .dialog-reader-settings-toggle svg {
+            width: 18px;
+            height: 18px;
+            fill-opacity: 0.8;
+            opacity: 0.8;
+            transition: fill 200ms linear;
+        }
+
+        .dialog-reader-webview {
+            display: none;
+            min-height: 0;
+            width: 100%;
+        }
+
+        &.reader-open .dialog-reader-toolbar {
+            display: flex;
+        }
+
+        &.reader-open .dialog-reader-settings-toggle {
+            display: block;
+        }
+
+        &.reader-open .dialog-reader-webview {
+            display: block;
+        }
+
+        &.reader-open.reader-toolbar-open .dialog-reader-webview {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        &.reader-open .dialog-page-webview {
+            position: absolute;
+            inset: 40px 0 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+
         &.reader-open .reader-view-toggle {
             background-color: var(--colorBgAlphaHeavy);
             border-color: var(--colorBgDarker);

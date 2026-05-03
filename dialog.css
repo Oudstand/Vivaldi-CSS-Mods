@@ -4,12 +4,12 @@
 @keyframes dialog-tab-open-anchored {
     from {
         opacity: 0;
-        transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1));
+        transform: translate3d(var(--tx0, 0px), var(--ty0, 0px), 0) scale(var(--s0, 0.1));
         filter: blur(3px);
     }
     to {
         opacity: 1;
-        transform: translate(0px, 0px) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
         filter: blur(0px);
     }
 }
@@ -17,12 +17,12 @@
 @keyframes dialog-tab-close-anchored {
     from {
         opacity: 1;
-        transform: translate(0px, 0px) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
         filter: blur(0px);
     }
     to {
         opacity: 0;
-        transform: translate(var(--tx0, 0px), var(--ty0, 0px)) scale(var(--s0, 0.1));
+        transform: translate3d(var(--tx0, 0px), var(--ty0, 0px), 0) scale(var(--s0, 0.1));
         filter: blur(2px);
     }
 }
@@ -42,7 +42,6 @@
     inset: 0;
     background-color: rgba(0, 0, 0, 0);
     transition: background-color 220ms ease;
-    backdrop-filter: blur(2px);
     border-radius: var(--radius);
     display: flex;
     justify-content: center;
@@ -50,6 +49,7 @@
 
     &.is-open {
         background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
     }
     &.is-leave {
         pointer-events: none;

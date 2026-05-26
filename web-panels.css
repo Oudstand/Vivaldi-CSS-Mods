@@ -67,3 +67,8 @@
 #switch .button-toolbar:has(.panel-audio) {
     opacity: 1 !important;
 }
+
+/** hide the audio icon on WhatsApp web panel */
+#switch .button-toolbar button[title*='WhatsApp'] .panel-audio {
+    display: none;
+}

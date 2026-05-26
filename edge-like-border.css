@@ -1,4 +1,4 @@
-/** 
+/**
 * Edge like border radius
 * Forum link: https://forum.vivaldi.net/topic/83618/edge-like-curved-frame-around-website
 */
@@ -7,7 +7,8 @@
     --edge-like-border-radius: var(--radius); /* 0.5rem */
 
     &.fullscreen {
-        #main, .inner {
+        #main,
+        .inner {
             padding-top: 0;
         }
     }
@@ -17,7 +18,7 @@
             margin-left: 0;
         }
 
-        &:has(#panels-container.left > .SlideBar) #webpage-stack {
+        &:has(#panels-container.left.expanded) #webpage-stack {
             margin-left: 3px;
         }
 
@@ -25,16 +26,16 @@
             margin-right: 0;
         }
 
-        &:has(#panels-container.right > .SlideBar) #webpage-stack {
+        &:has(#panels-container.right.expanded) #webpage-stack {
             margin-right: 3px;
         }
 
         #webpage-stack {
             box-shadow: 0 0 0 var(--edge-like-border-radius) var(--colorAccentBg);
 
-            margin-left: calc(var(--edge-like-border-radius) / 2);
+            margin-left: calc(var(--edge-like-border-radius) / 2) !important;
             margin-bottom: calc(var(--edge-like-border-radius) / 2);
-            margin-right: calc(var(--edge-like-border-radius) / 2);
+            margin-right: calc(var(--edge-like-border-radius) / 2) !important;
 
             &::before {
                 content: '';
@@ -69,14 +70,19 @@
                 }
             }
 
+            #panels {
+                max-width: unset;
+            }
+
             > button.SlideBar {
                 background: var(--colorAccentBg);
             }
         }
 
         .panel-group {
-            transition: border-right 0.5s ease, width var(--duration) ease-out !important;
+            transition: width var(--duration) ease-out !important;
             margin-bottom: calc(var(--edge-like-border-radius) / 2);
+            border-right: none !important;
 
             &::before {
                 content: '';
@@ -103,7 +109,8 @@
         margin: calc(var(--edge-like-border-radius) / 2) !important;
     }
 
-    #switch, .panel-group {
+    #switch,
+    .panel-group {
         margin-top: calc(var(--edge-like-border-radius) / 2);
     }
 
@@ -138,12 +145,12 @@
     }
 }
 
-#app:not(.fullscreen-listener-enabled):has(#switch button[title="automate-bookmark-bar"]) .bookmark-bar-top:not(:has(.toolbar-editor)) .bookmark-bar::after {
+#app:not(.fullscreen-listener-enabled):has(#switch button[title='automate-bookmark-bar']) .bookmark-bar-top:not(:has(.toolbar-editor)) .bookmark-bar::after {
     content: '';
     position: absolute;
     height: var(--edge-like-border-radius);
-    left: calc(var(--edge-like-border-radius) * -2 / 5);
-    right: calc(var(--edge-like-border-radius) * -2 / 5);
+    left: 1px;
+    right: calc(var(--edge-like-border-radius) * -1 / 2);
     bottom: calc(var(--edge-like-border-radius) * -1 - 1px);
     border: calc(var(--edge-like-border-radius) / 2) solid var(--colorAccentBg);
     border-bottom: none;

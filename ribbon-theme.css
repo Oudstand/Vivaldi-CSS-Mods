@@ -97,20 +97,17 @@ footer,
     }
 }
 
-#browser:not(.fullscreen) {
-    &:is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container,
-    .fullscreen-listener-enabled & #panels-container {
-        &.icons,
-        &.overlay {
-            width: 41px !important;
+#browser:not(.fullscreen) #panels-container:is(.icons, .expanded) {
+    .density-on & {
+        width: 41px !important;
+
+        .panel-group {
+            left: calc(var(--edge-like-border-radius) / 2 + 41px) !important;
         }
     }
 
-    &.density-on:is(:has(#panels-container.icons), :has(#panels-container > .SlideBar)) #panels-container {
-        &.icons,
-        &.overlay {
-            width: 46px !important;
-        }
+    .fullscreen-listener-enabled & {
+        width: 41px !important;
     }
 }
 
@@ -130,7 +127,7 @@ footer,
 
     #switch {
         background-color: var(--ribbon-theme-background-color) !important;
-        margin: 0 0.2rem 0.5rem 0.2rem;
+        margin-left: calc(var(--edge-like-border-radius) / 4);
         border-radius: var(--radius);
 
         .button-toolbar {

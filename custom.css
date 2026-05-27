@@ -14,7 +14,9 @@
 }
 
 .tab.active {
-    font-weight: bold; /** sets the active tabs font weight to bold */
+    .title {
+        font-weight: bold; /** sets the active tabs font weight to bold */
+    }
 
     .tab-header .favicon {
         filter: none !important; /* removes filter of favicon */

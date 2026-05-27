@@ -10,13 +10,13 @@
         height: 33px !important;
         z-index: 3;
         transform: translateY(0);
-        transition: transform .45s ease-out .25s, opacity .45s ease-out .25s !important;
+        transition: transform .45s ease-out .25s, opacity .45s ease-out .25s, background-color 0.5s, border-color 0.5s, color 0.5s !important;
         padding-bottom: 3px;
     }
 
     .bookmark-bar:not(:focus-within):not(:hover) {
         transform: translateY(-75%);
         opacity: 0;
-        transition: transform .65s .5s, opacity .65s .5s !important;
+        transition: transform .65s .5s, opacity .65s .5s, background-color 0.5s, border-color 0.5s, color 0.5s !important;
     }
 }

@@ -13,17 +13,25 @@
 .tab.active,
 .mainbar,
 .bookmark-bar,
+.bookmark-bar::after,
 #main,
-#webpage-stack,
-#webpage-stack::before,
 .SlideBar,
-.panel-group::before,
 .toolbar-mainbar,
 #panels-container,
+#panels-container::after,
 .YBDomainButton,
-.YBDomain::after,
 footer,
 .toolbar-extensions {
+    transition:
+        background-color 0.5s,
+        border-color 0.5s,
+        color 0.5s !important;
+}
+
+#webpage-stack,
+#webpage-stack::before,
+.panel-group::before,
+.YBDomain::after {
     transition:
         background-color 0.5s,
         border-color 0.5s,

@@ -8,48 +8,101 @@
         display: none;
     }
 
+    #tabs-tabbar-container .tab-position.safari-compact-addressbar-tab-position {
+        z-index: 1002 !important;
+        pointer-events: none;
+    }
+
     .tab.safari-compact-addressbar-tab {
-        .tab-header {
+        position: relative;
+        background-color: transparent !important;
+        background-image: none !important;
+        box-shadow: none !important;
+        color: inherit !important;
+        overflow: visible !important;
+        pointer-events: none;
+
+        &:before,
+        &:after {
+            display: none !important;
+        }
+    }
+
+    .tab.safari-compact-addressbar-tab .tab-header {
+        pointer-events: none;
+        z-index: 1003;
+
+        > :not(.close) {
             opacity: 0;
+        }
+
+        .close {
+            display: flex;
+            pointer-events: auto;
+            opacity: 1;
         }
     }
 
     .UrlBar-AddressField.safari-compact-addressbar-field {
-        position: fixed !important;
-        z-index: 1001;
-        left: var(--safariCompactFieldLeft);
-        top: var(--safariCompactFieldTop);
+        position: absolute !important;
+        z-index: 1004;
+        left: 2px;
+        top: 2px;
+        right: 26px;
+        bottom: 2px;
         display: flex !important;
         box-sizing: border-box;
-        width: var(--safariCompactFieldWidth) !important;
+        width: auto !important;
         min-width: 0 !important;
         max-width: none !important;
-        height: var(--safariCompactFieldHeight);
+        height: auto;
         margin: 0 !important;
-        border-color: transparent;
+        padding: 0 4px;
+        border-color: var(--colorBorder);
         border-radius: var(--currentRadius, var(--radius)) !important;
-        background-color: var(--colorAccentBg);
-        color: var(--colorAccentFg);
-        box-shadow: none !important;
+        background-color: var(--colorBg) !important;
+        color: var(--colorFg) !important;
+        opacity: 1 !important;
+        box-shadow: 0 0 0 1px var(--colorBorderIntense, var(--colorBorder)) !important;
         outline: none;
+        align-items: center;
+        justify-content: flex-start;
+        overflow: hidden;
+        pointer-events: auto;
         transform: none !important;
 
         &:focus-within {
-            width: var(--safariCompactFieldWidth) !important;
-            height: var(--safariCompactFieldHeight);
-            right: auto;
+            width: auto !important;
+            height: auto;
+            right: 2px;
             margin-top: 0;
-            background-color: var(--colorBg);
-            color: var(--colorFg);
+            padding: 0 4px;
+            background-color: var(--colorBg) !important;
+            color: var(--colorFg) !important;
             outline: 2px solid var(--colorAccentBgFadedMost);
             outline-offset: -2px;
-            box-shadow: none !important;
+            box-shadow: 0 0 0 1px var(--colorBorderIntense, var(--colorBorder)) !important;
+            overflow: visible;
             transform: none !important;
         }
 
         .UrlBar-UrlFieldWrapper,
         .UrlFragment-Wrapper {
             min-width: 0;
+        }
+
+        .UrlBar-UrlFieldWrapper {
+            flex: 1 1 auto;
+        }
+
+        &:not(:focus-within) {
+            .UrlBar-UrlObfuscationWarning,
+            .pageload-ticker,
+            .UrlBar-UrlFieldWrapper + .toolbar .button-toolbar:not(.permission-popup.is-undecided, .permission-popup.is-allowing),
+            .drop-down-menu,
+            .UrlFragments > .UrlFragment--Lowlight:not(.DomainText) {
+                display: none;
+            }
         }
 
         .OmniDropdown {
@@ -83,13 +136,7 @@
 
 #browser:is(.safari-compact-addressbar-open, .safari-compact-addressbar-closing):not(.toolbar-edit-mode) .UrlBar-AddressField.safari-compact-addressbar-field {
     transition:
-        left 0.2s cubic-bezier(0.2, 0, 0, 1),
-        top 0.2s cubic-bezier(0.2, 0, 0, 1),
-        width 0.2s cubic-bezier(0.2, 0, 0, 1),
-        height 0.2s cubic-bezier(0.2, 0, 0, 1),
-        background-color 0.12s ease-out,
-        color 0.12s ease-out,
-        outline-color 0.12s ease-out;
+        right 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 #browser:not(.toolbar-edit-mode):not(:has(.toolbar-mailbar:not(.toolbar-hidden))) #tabs-container {

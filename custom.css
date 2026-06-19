@@ -61,3 +61,8 @@
         margin-right: 3px;
     }
 }
+
+/** decrease opacity of radar widget on dashboard */
+.dashboard-widget webview[src*='radar.wo-cloud.com'] {
+    opacity: 0.4;
+}

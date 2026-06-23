@@ -3,9 +3,27 @@
  * Forum link: https://forum.vivaldi.net/post/744872
  */
 
+/*
+ * Adaptive Ribbon-Farbe:
+ * - sehr dunkle Akzentfarbe (OKLCH-L < 0.25): 90 % Akzentfarbe + 10 % Weiß
+ * - sonst: 70 % Akzentfarbe + 30 % Schwarz
+ */
+@property --ribbon-mix-color {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: black;
+}
+
 #browser {
     /* --ribbon-theme-background-color: var(--colorBgAlphaHeavy); --colorBgAlphaBlur */
-    --ribbon-theme-background-color: color-mix(in srgb, var(--colorAccentBg) 70%, black); /* alternativ #222 */
+    /* --ribbon-theme-background-color: color-mix(in srgb, var(--colorAccentBg) 70%, black); alternativ #222 */
+
+    --dark-threshold: 0.25;
+    /* Weiß unterhalb des Schwellenwerts, sonst Schwarz */
+    --ribbon-mix-color: oklch(from var(--colorAccentBg) clamp(0, sign(var(--dark-threshold) - l), 1) 0 none / 1);
+    /* 90 % bei Weiß, sonst 70 % */
+    --ribbon-accent-share: if(style(--ribbon-mix-color: oklch(1 0 none / 1)): 90%; else: 70%);
+    --ribbon-theme-background-color: color-mix(in srgb, var(--colorAccentBg) var(--ribbon-accent-share), var(--ribbon-mix-color));
 }
 
 #browser,

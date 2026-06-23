@@ -72,3 +72,10 @@
 #switch .button-toolbar button[title*='WhatsApp'] .panel-audio {
     display: none;
 }
+
+/** add background to the web panel icon of the active theme */
+#browser.theme-id-fc72f98d-7130-4b83-99b1-379f3d08e6d0 #switch button[title='Arbeit'] img,
+#browser.theme-id-3eac1ab2-ab51-4315-b070-c5209ef7a50f #switch button[title='Freizeit'] img {
+    border-radius: calc(var(--radius) / 2);
+    background: color-mix(in srgb, var(--ribbon-theme-background-color) 80%, contrast-color(var(--ribbon-theme-background-color)));
+}

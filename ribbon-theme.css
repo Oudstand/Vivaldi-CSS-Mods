@@ -4,7 +4,8 @@
  */
 
 #browser {
-    --ribbon-theme-background-color: var(--colorBgAlphaBlur); /* --colorAccentBgDark */
+    /* --ribbon-theme-background-color: var(--colorBgAlphaHeavy); --colorBgAlphaBlur */
+    --ribbon-theme-background-color: color-mix(in srgb, var(--colorAccentBg) 70%, black); /* alternativ #222 */
 }
 
 #browser,

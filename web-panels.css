@@ -78,5 +78,5 @@
 #browser.theme-id-3eac1ab2-ab51-4315-b070-c5209ef7a50f #switch button[title='Freizeit'] img {
     border-radius: calc(var(--radius) / 2);
     /* background: color-mix(in srgb, var(--ribbon-theme-background-color) 80%, contrast-color(var(--ribbon-theme-background-color))); */
-    background-color: var(--colorAccentBg);
+    background: var(--colorAccentBg);
 }

@@ -37,12 +37,11 @@
 }
 
 .dialog-container {
-    z-index: 999;
+    z-index: 10; /* Must remain below #webpage-stack::before in edge-like-border.css */
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0);
     transition: background-color 220ms ease;
-    border-radius: var(--radius);
     display: flex;
     justify-content: center;
     align-items: center;

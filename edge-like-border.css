@@ -48,7 +48,7 @@
                 border-top-right-radius: var(--edge-like-border-radius);
                 border-bottom-right-radius: var(--edge-like-border-radius); */
                 outline: var(--edge-like-border-radius) solid var(--colorAccentBg);
-                z-index: 4;
+                z-index: 15; /* Keep above dialog overlay to preserve the rounded page frame */
                 pointer-events: none;
             }
         }

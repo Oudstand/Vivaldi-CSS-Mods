@@ -124,6 +124,10 @@ footer,
         button {
             border-radius: var(--radius);
             background-color: transparent;
+
+            &:hover {
+                background-color: var(--colorAccentBgAlphaBlur) !important;
+            }
         }
     }
 }

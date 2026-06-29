@@ -73,6 +73,10 @@ footer,
     background-color: var(--ribbon-theme-background-color) !important;
 }
 
+.tab-wrapper:hover .tab:not(.active) {
+    background-color: var(--ribbon-theme-background-color) !important;
+}
+
 .tab {
     border-radius: var(--radiusHalf) !important;
 
@@ -159,7 +163,7 @@ footer,
 
         .button-toolbar {
             &:not(.toolbar-spacer, .toolbar-divider, .toolbar-spacer-flexible):hover {
-                background-color: var(--colorAccentBgAlphaHeavy) !important;
+                background-color: var(--colorAccentBgAlphaBlur) !important;
             }
 
             > button:hover {

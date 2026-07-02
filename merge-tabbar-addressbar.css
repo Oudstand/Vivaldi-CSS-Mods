@@ -90,7 +90,8 @@
             height 0.2s ease-in-out,
             margin-top 0.2s ease-in-out,
             right 0.2s ease-in-out,
-            box-shadow 0.2s ease-in-out !important;
+            box-shadow 0.2s ease-in-out,
+            background-color 0.5s !important;
 
         &:focus-within {
             height: 34px;

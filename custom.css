@@ -62,7 +62,7 @@
     }
 }
 
-/** decrease opacity of radar widget on dashboard */
+/** decrease opacity of radar widget on dashboard (https://radar.wo-cloud.com/desktop/rr/compact?wrx=52.283,7.433&wrm=10&wry=52.283,7.433&wro=true) */
 .dashboard-widget webview[src*='radar.wo-cloud.com'] {
     opacity: 0.4;
 }

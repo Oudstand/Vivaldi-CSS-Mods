@@ -130,8 +130,13 @@
             flex: 0 0 35px;
         }
 
-        .options-button:hover {
+        .options-button:hover:not(:disabled) {
             background-color: var(--colorBgAlphaHeavy);
+        }
+
+        .options-button:disabled {
+            opacity: 0.4;
+            cursor: default;
         }
 
         .options-button[data-tooltip]::after {
@@ -167,6 +172,16 @@
             padding: 0.25rem 0.5rem;
             flex: 0 0 20%;
             min-width: 10rem;
+        }
+
+        .dialog-input::-webkit-search-cancel-button {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .dialog-input:is(:hover, :focus)::-webkit-search-cancel-button {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .progress-bar {

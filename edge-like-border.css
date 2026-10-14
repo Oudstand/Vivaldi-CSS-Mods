@@ -4,7 +4,7 @@
 */
 
 #browser {
-    --edge-like-border-radius: var(--radius); /* 0.5rem */
+    --edge-like-border-radius: var(--radius);
 
     &.fullscreen {
         #main,
@@ -14,22 +14,6 @@
     }
 
     &:not(.fullscreen) {
-        &:has(#panels-container.left.icons) #webpage-stack {
-            margin-left: 0;
-        }
-
-        &:has(#panels-container.left.expanded) #webpage-stack {
-            margin-left: 3px;
-        }
-
-        &:has(#panels-container.right.icons) #webpage-stack {
-            margin-right: 0;
-        }
-
-        &:has(#panels-container.right.expanded) #webpage-stack {
-            margin-right: 3px;
-        }
-
         #webpage-stack {
             box-shadow: 0 0 0 var(--edge-like-border-radius) var(--colorAccentBg);
 
@@ -43,12 +27,9 @@
                 width: 100%;
                 height: 100%;
                 border-radius: var(--edge-like-border-radius);
-                /* border-top-left-radius: var(--edge-like-border-radius);
-                border-bottom-left-radius: var(--edge-like-border-radius);
-                border-top-right-radius: var(--edge-like-border-radius);
-                border-bottom-right-radius: var(--edge-like-border-radius); */
                 outline: var(--edge-like-border-radius) solid var(--colorAccentBg);
-                z-index: 15; /* Keep above dialog overlay to preserve the rounded page frame */
+                /* Override Vivaldi's more specific frame rule; keep above the dialog overlay. */
+                z-index: 15 !important;
                 pointer-events: none;
             }
         }
@@ -61,12 +42,40 @@
             border-color: var(--colorAccentBg) !important;
 
             &:not(.icons):not(.overlay) .panel-group {
-                margin-right: calc(var(--edge-like-border-radius) / 4);
-                padding-right: calc(var(--edge-like-border-radius) / 4);
-                border-right: none;
-
                 .panel-collapse-guard {
                     border-radius: var(--edge-like-border-radius);
+                }
+            }
+
+            &.left {
+                &:not(.icons):not(.overlay) .panel-group {
+                    margin-right: calc(var(--edge-like-border-radius) / 4);
+                    padding-right: calc(var(--edge-like-border-radius) / 4);
+                }
+
+                .panel-group {
+                    border-right: none !important;
+
+                    &::before {
+                        border-top-left-radius: var(--edge-like-border-radius);
+                        border-bottom-left-radius: var(--edge-like-border-radius);
+                    }
+                }
+            }
+
+            &.right {
+                &:not(.icons):not(.overlay) .panel-group {
+                    margin-left: calc(var(--edge-like-border-radius) / 4);
+                    padding-left: calc(var(--edge-like-border-radius) / 4);
+                }
+
+                .panel-group {
+                    border-left: none !important;
+
+                    &::before {
+                        border-top-right-radius: var(--edge-like-border-radius);
+                        border-bottom-right-radius: var(--edge-like-border-radius);
+                    }
                 }
             }
 
@@ -82,15 +91,12 @@
         .panel-group {
             transition: width var(--duration) ease-out !important;
             margin-bottom: calc(var(--edge-like-border-radius) / 2);
-            border-right: none !important;
 
             &::before {
                 content: '';
                 position: fixed;
                 width: 100%;
                 height: 100%;
-                border-top-left-radius: var(--edge-like-border-radius);
-                border-bottom-left-radius: var(--edge-like-border-radius);
                 outline: var(--edge-like-border-radius) solid var(--colorAccentBg);
                 z-index: 1;
                 pointer-events: none;
@@ -114,19 +120,29 @@
         margin-top: calc(var(--edge-like-border-radius) / 2);
     }
 
-    #panels-container::after {
+    #panels-container:is(.left, .right)::after {
         content: '';
         position: absolute;
         width: var(--edge-like-border-radius);
         top: 0;
         bottom: 0;
-        right: calc(var(--edge-like-border-radius) * -1 - 1px);
         border: calc(var(--edge-like-border-radius) / 2) solid var(--colorAccentBg);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    #panels-container.left::after {
+        right: calc(var(--edge-like-border-radius) * -1 - 1px);
         border-right: none;
         border-top-left-radius: calc(var(--edge-like-border-radius) * 2);
         border-bottom-left-radius: calc(var(--edge-like-border-radius) * 2);
-        pointer-events: none;
-        z-index: -1;
+    }
+
+    #panels-container.right::after {
+        left: calc(var(--edge-like-border-radius) * -1 - 1px);
+        border-left: none;
+        border-top-right-radius: calc(var(--edge-like-border-radius) * 2);
+        border-bottom-right-radius: calc(var(--edge-like-border-radius) * 2);
     }
 
     .bookmark-bar::after {

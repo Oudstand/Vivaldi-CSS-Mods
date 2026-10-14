@@ -136,13 +136,12 @@ footer,
     }
 }
 
-#browser:not(.fullscreen) #panels-container:is(.icons, .expanded) {
+/* Keep the compact strip width without constraining docked panel content. */
+#browser:not(.fullscreen) #panels-container:is(.icons, .overlay) {
     .density-on & {
         width: 41px !important;
 
-        .panel-group {
-            left: calc(var(--edge-like-border-radius) / 2 + 41px) !important;
-        }
+        --ribbon-panel-offset: calc(var(--edge-like-border-radius, 0px) / 2 + 41px);
     }
 
     .fullscreen-listener-enabled & {
@@ -151,7 +150,26 @@ footer,
 }
 
 #panels-container {
+    --ribbon-panel-offset: 41px;
     background-color: var(--colorAccentBg);
+
+    &.overlay.left .panel-group {
+        left: var(--ribbon-panel-offset) !important;
+        right: auto !important;
+    }
+
+    &.overlay.right .panel-group {
+        right: var(--ribbon-panel-offset) !important;
+        left: auto !important;
+    }
+
+    &.left #switch {
+        margin-left: calc(var(--edge-like-border-radius) / 4);
+    }
+
+    &.right #switch {
+        margin-right: calc(var(--edge-like-border-radius) / 4);
+    }
 
     /** adjust hover effect */
     &.left #switch .button-toolbar {
@@ -166,7 +184,6 @@ footer,
 
     #switch {
         background-color: var(--ribbon-theme-background-color) !important;
-        margin-left: calc(var(--edge-like-border-radius) / 4);
         border-radius: var(--radius);
 
         .button-toolbar {
@@ -182,8 +199,6 @@ footer,
     }
 
     .panel-group {
-        left: 41px !important;
-
         .panel-collapse-guard {
             min-width: 100% !important;
 

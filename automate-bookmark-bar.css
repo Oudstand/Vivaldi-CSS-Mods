@@ -1,8 +1,9 @@
 /**
 * Simple Automate Bookmark-bar
 * Forum link: https://forum.vivaldi.net/topic/64142/simple-automate-bookmark-bar-css-mod
+* JS/automate-bookmark-bar.js clears stale hover state when entering a webview.
 */
-#app:not(.fullscreen-listener-enabled):has(#switch button[title="automate-bookmark-bar"]) .bookmark-bar-top:not(:has(.toolbar-editor)) {
+#app:not(.fullscreen-listener-enabled):has(#switch button[title="automate-bookmark-bar"]) .bookmark-bar-top:not(.toolbar-edit-mode):not(:has(.toolbar-editor)) {
     .bookmark-bar {
         margin-bottom: -36px;
         margin-left: 40px;
@@ -10,11 +11,12 @@
         height: 33px !important;
         z-index: 3;
         transform: translateY(0);
+        opacity: 1;
         transition: transform .45s ease-out .25s, opacity .45s ease-out .25s, background-color 0.5s, border-color 0.5s, color 0.5s !important;
         padding-bottom: 3px;
     }
 
-    .bookmark-bar:not(:focus-within):not(:hover) {
+    .bookmark-bar:not(:has(:focus-visible)):is(:not(:hover), [data-page-pointer]) {
         transform: translateY(-75%);
         opacity: 0;
         transition: transform .65s .5s, opacity .65s .5s, background-color 0.5s, border-color 0.5s, color 0.5s !important;

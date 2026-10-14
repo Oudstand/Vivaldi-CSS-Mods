@@ -5,6 +5,7 @@
  */
 
 #app {
+    /* Preferred minimum; the field may shrink further in narrow windows. */
     --address-bar-min-width: 20rem;
     --address-bar-width: 25vw;
     --address-bar-width-focused: 40vw;
@@ -65,43 +66,50 @@
     display: none;
 }
 
-#tabs-container .toolbar:has(.UrlBar-AddressField) {
-    z-index: 7;
-}
-
-#tabs-container > .toolbar-tabbar-before {
-    position: relative;
-    overflow: visible;
-
-    .button-toolbar:has(+ .UrlBar-AddressField) {
-        margin-right: calc(max(var(--address-bar-width), var(--address-bar-min-width)) + 1vw);
+#browser:is(.tabs-top, .tabs-bottom):not(.toolbar-edit-mode) #tabs-container:has(> .toolbar-tabbar-before > .UrlBar-AddressField) {
+    > .toolbar-tabbar-before {
+        position: relative;
+        overflow: visible;
+        height: 30px;
+        z-index: 7;
     }
 
-    .UrlBar-AddressField {
-        min-width: var(--address-bar-min-width) !important;
-        max-width: unset !important;
-        position: absolute !important;
+    > .toolbar-tabbar-before > .UrlBar-AddressField {
+        --address-bar-rest-width: max(var(--address-bar-width), var(--address-bar-min-width));
+        --address-bar-target-width: var(--address-bar-rest-width);
+
+        /* Keep its resting space in the toolbar, including while expanded. */
+        flex: 0 1 auto;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: var(--address-bar-target-width);
         height: 30px;
-        width: max(var(--address-bar-width), var(--address-bar-min-width));
-        right: 0;
-        margin-right: 0.5rem;
+        margin-block: 0;
+        margin-inline: 2px 0.5rem;
+        margin-inline-end: calc(0.5rem + var(--address-bar-rest-width) - var(--address-bar-target-width));
         transition:
             width 0.2s ease-in-out,
+            margin-inline-end 0.2s ease-in-out,
             height 0.2s ease-in-out,
-            margin-top 0.2s ease-in-out,
-            right 0.2s ease-in-out,
             box-shadow 0.2s ease-in-out,
             background-color 0.5s !important;
 
         &:focus-within {
+            --address-bar-target-width: max(var(--address-bar-rest-width), var(--address-bar-width-focused));
             height: 34px;
-            width: var(--address-bar-width-focused);
-            right: calc(max(var(--address-bar-min-width), var(--address-bar-width)) - var(--address-bar-width-focused));
-            margin-top: -3px;
+            z-index: 1;
             background-color: var(--colorBg);
             box-shadow:
                 0 10px 20px rgba(0, 0, 0, 0.19),
                 0 6px 6px rgba(0, 0, 0, 0.23);
         }
+    }
+}
+
+/* Leave space for tabs and window controls in compact windows. */
+@media (max-width: 50rem) {
+    #browser:is(.tabs-top, .tabs-bottom):not(.toolbar-edit-mode) #tabs-container:has(> .toolbar-tabbar-before > .UrlBar-AddressField) > .toolbar-tabbar-before {
+        min-width: 0;
+        max-width: 50%;
     }
 }

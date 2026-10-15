@@ -92,7 +92,8 @@
             margin-inline-end 0.2s ease-in-out,
             height 0.2s ease-in-out,
             box-shadow 0.2s ease-in-out,
-            background-color 0.5s !important;
+            background-color var(--ribbon-color-duration, 0.5s),
+            color var(--ribbon-color-duration, 0.5s) !important;
 
         &:focus-within {
             --address-bar-target-width: max(var(--address-bar-rest-width), var(--address-bar-width-focused));

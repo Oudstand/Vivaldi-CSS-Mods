@@ -5,7 +5,7 @@
 
 /*
  * Adaptive Ribbon-Farbe:
- * - sehr dunkle Akzentfarbe (OKLCH-L < 0.25): 90 % Akzentfarbe + 10 % WeiÃŸ
+ * - sehr dunkle Akzentfarbe (OKLCH-L < 0.25): 90 % Akzentfarbe + 10 % Weiß
  * - sonst: 70 % Akzentfarbe + 30 % Schwarz
  */
 @property --ribbon-mix-color {
@@ -15,15 +15,31 @@
 }
 
 #browser {
-    /* --ribbon-theme-background-color: var(--colorBgAlphaHeavy); --colorBgAlphaBlur */
-    /* --ribbon-theme-background-color: color-mix(in srgb, var(--colorAccentBg) 70%, black); alternativ #222 */
-
     --dark-threshold: 0.25;
-    /* WeiÃŸ unterhalb des Schwellenwerts, sonst Schwarz */
+    /* Weiß unterhalb des Schwellenwerts, sonst Schwarz */
     --ribbon-mix-color: oklch(from var(--colorAccentBg) clamp(0, sign(var(--dark-threshold) - l), 1) 0 none / 1);
-    /* 90 % bei WeiÃŸ, sonst 70 % */
+    /* 90 % bei Weiß, sonst 70 % */
     --ribbon-accent-share: if(style(--ribbon-mix-color: oklch(1 0 none / 1)): 90%; else: 70%);
     --ribbon-theme-background-color: color-mix(in srgb, var(--colorAccentBg) var(--ribbon-accent-share), var(--ribbon-mix-color));
+    --ribbon-theme-foreground-color: var(--colorAccentFg);
+    --ribbon-color-duration: 0.5s;
+}
+
+/* Choose the foreground for the mixed background using the browser's native CSS function. */
+@supports (color: contrast-color(black)) {
+    #browser {
+        --ribbon-theme-foreground-color: contrast-color(var(--ribbon-theme-background-color));
+    }
+}
+
+#browser.animation-off {
+    --ribbon-color-duration: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #browser {
+        --ribbon-color-duration: 0s;
+    }
 }
 
 #browser,
@@ -46,9 +62,9 @@ footer,
 .button-toolbar,
 .button-toolbar img {
     transition:
-        background-color 0.5s,
-        border-color 0.5s,
-        color 0.5s !important;
+        background-color var(--ribbon-color-duration),
+        border-color var(--ribbon-color-duration),
+        color var(--ribbon-color-duration) !important;
 }
 
 #webpage-stack,
@@ -56,11 +72,11 @@ footer,
 .panel-group::before,
 .DomainText::after {
     transition:
-        background-color 0.5s,
-        border-color 0.5s,
-        outline 0.5s,
-        box-shadow 0.5s,
-        color 0.5s !important;
+        background-color var(--ribbon-color-duration),
+        border-color var(--ribbon-color-duration),
+        outline var(--ribbon-color-duration),
+        box-shadow var(--ribbon-color-duration),
+        color var(--ribbon-color-duration) !important;
 }
 
 #app:not(.fullscreen-listener-enabled) {
@@ -75,10 +91,12 @@ footer,
 
 .UrlBar-AddressField {
     background-color: var(--ribbon-theme-background-color) !important;
+    color: var(--ribbon-theme-foreground-color) !important;
 }
 
 .tab-wrapper:hover .tab:not(.active) {
     background-color: var(--ribbon-theme-background-color) !important;
+    color: var(--ribbon-theme-foreground-color) !important;
 }
 
 .tab {
@@ -88,11 +106,11 @@ footer,
         overflow: hidden !important;
         height: var(--Height) !important;
         background-color: var(--ribbon-theme-background-color) !important;
+        color: var(--ribbon-theme-foreground-color) !important;
     }
 }
 
 .tab-group-indicator {
-    top: -3px !important;
     padding-inline: var(--densityGap) !important;
 
     .tab-indicator {
@@ -100,15 +118,36 @@ footer,
 
         &.active {
             background-color: var(--colorHighlightFgAlpha) !important;
-            border-bottom-width: 3px !important;
         }
     }
+}
 
-    .maximized & {
-        top: -1px !important;
+/* Match the tab bar side and keep all painted stripes equally thin. */
+#browser:not(.tabs-at-edge) {
+    .tab-group-indicator .tab-indicator.active {
+        border-bottom-width: 3px !important;
+    }
 
-        .tab-indicator.active {
-            border-bottom-width: 6px !important;
+    &.tabs-bottom .tab-group-indicator .tab-indicator.active {
+        border-top-width: 6px !important;
+        border-bottom-width: 0 !important;
+    }
+
+    &:is(.tabs-top, .tabs-left, .tabs-right) .tab-group-indicator {
+        top: -3px !important;
+    }
+
+    &.tabs-bottom .tab-group-indicator {
+        bottom: -3px !important;
+    }
+
+    &.maximized {
+        &:is(.tabs-top, .tabs-left, .tabs-right) .tab-group-indicator {
+            top: -1px !important;
+        }
+
+        &.tabs-bottom .tab-group-indicator {
+            bottom: -1px !important;
         }
     }
 }
@@ -124,10 +163,12 @@ footer,
     .observer {
         border-radius: var(--radius) !important;
         background: var(--ribbon-theme-background-color) !important;
+        color: var(--ribbon-theme-foreground-color);
 
         button {
             border-radius: var(--radius);
             background-color: transparent;
+            color: inherit;
 
             &:hover {
                 background-color: var(--colorAccentBgAlphaBlur) !important;
@@ -184,9 +225,16 @@ footer,
 
     #switch {
         background-color: var(--ribbon-theme-background-color) !important;
+        color: var(--ribbon-theme-foreground-color);
         border-radius: var(--radius);
 
         .button-toolbar {
+            color: var(--ribbon-theme-foreground-color);
+
+            > button {
+                color: inherit;
+            }
+
             &:not(.toolbar-spacer, .toolbar-divider, .toolbar-spacer-flexible):hover {
                 background-color: var(--colorAccentBgAlphaBlur) !important;
             }
@@ -214,9 +262,16 @@ footer {
     border: none !important;
 
     .toolbar-statusbar {
+        /* Native transparent-theme buttons and labels read this local color. */
+        --colorImageBottomFg: var(--ribbon-theme-foreground-color);
         border-radius: var(--radius);
         margin: 0 0.2rem 0.2rem;
         background: var(--ribbon-theme-background-color) !important;
+        color: var(--ribbon-theme-foreground-color) !important;
+
+        .toolbar-extensions .button-toolbar {
+            color: inherit;
+        }
     }
 }
 

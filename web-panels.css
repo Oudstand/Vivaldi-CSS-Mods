@@ -73,17 +73,32 @@
     display: none;
 }
 
-/** add border radius to the web panel icon of the themes */
-#switch {
-    button[title='Arbeit'] img,
-    button[title='Freizeit'] img {
-        border-radius: calc(var(--radius) / 2);
-    }
+/* workspace-command-highlight.js marks buttons using the actual workspace state. */
+#switch .workspace-command > button {
+    position: relative;
+    isolation: isolate;
+    border-radius: calc(var(--radius) / 2);
 }
 
-/** add background to the web panel icon of the active theme */
-#browser.theme-id-fc72f98d-7130-4b83-99b1-379f3d08e6d0 #switch button[title='Arbeit'] img,
-#browser.theme-id-3eac1ab2-ab51-4315-b070-c5209ef7a50f #switch button[title='Freizeit'] img {
-    /* background: color-mix(in srgb, var(--ribbon-theme-background-color) 80%, contrast-color(var(--ribbon-theme-background-color))); */
-    background-color: var(--colorAccentBg);
+#switch .button-toolbar.workspace-command-active {
+    opacity: 1 !important;
+
+    > button {
+        background-color: transparent !important;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            width: 24px;
+            height: 24px;
+            border-radius: min(6px, var(--radiusHalf, 6px));
+            background-color: color-mix(in srgb, var(--ribbon-theme-foreground-color, var(--colorFg)) 12%, transparent);
+            transition: background-color var(--ribbon-color-duration, 0s);
+            pointer-events: none;
+            z-index: -1;
+        }
+    }
 }

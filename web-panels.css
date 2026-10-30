@@ -1,10 +1,10 @@
 #switch {
     .toolbar-divider {
-        height: 4px !important;
+        height: 2px !important;
         max-width: 20px;
         margin: 5px;
         border-radius: var(--radius) !important;
-        background: gray !important;
+        background: color-mix(in srgb, var(--ribbon-theme-foreground-color, var(--colorFg)) 35%, transparent) !important;
 
         button {
             display: none;
@@ -53,7 +53,7 @@
 
 /** add hover effect to speed dials and web panels */
 .dial,
-#switch .button-toolbar:not(.active) {
+#switch .button-toolbar:not(.active, .toolbar-divider) {
     opacity: 0.66 !important;
     transition: opacity 0.25s !important;
 }

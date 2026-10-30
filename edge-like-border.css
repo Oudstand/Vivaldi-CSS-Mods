@@ -34,12 +34,30 @@
             }
         }
 
+        /* Match the page-side gap to the strip's outer quarter-radius margin. */
+        .inner:has(#panels-container.left.icons:not(.switcher)) #webpage-stack {
+            margin-left: calc(var(--edge-like-border-radius) / 4) !important;
+        }
+
+        .inner:has(#panels-container.right.icons:not(.switcher)) #webpage-stack {
+            margin-right: calc(var(--edge-like-border-radius) / 4) !important;
+        }
+
         #switch {
             margin-bottom: calc(var(--edge-like-border-radius) / 2);
         }
 
         #panels-container {
             border-color: var(--colorAccentBg) !important;
+
+            /* Reserve space for the rounded strip, including its outer margin. */
+            &.icons {
+                min-width: min-content;
+
+                #panels {
+                    min-width: min-content;
+                }
+            }
 
             &:not(.icons):not(.overlay) .panel-group {
                 .panel-collapse-guard {

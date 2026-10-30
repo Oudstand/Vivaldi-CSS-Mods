@@ -60,13 +60,16 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
             const box=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom};};
             const panels=document.getElementById('panels-container'),group=panels.querySelector('.panel-group'),page=document.getElementById('webpage-stack');
             const frame=getComputedStyle(page,'::before'),border=getComputedStyle(panels,'::after'),style=getComputedStyle(page),panelFrame=group&&getComputedStyle(group,'::before');
-            return {viewport:innerWidth,panels:box(panels),group:group&&box(group),page:box(page),marginLeft:parseFloat(style.marginLeft),marginRight:parseFloat(style.marginRight),frameZ:+frame.zIndex,frameEvents:frame.pointerEvents,
+            return {viewport:innerWidth,main:box(document.getElementById('main')),panels:box(panels),strip:box(document.getElementById('switch')),clip:box(document.getElementById('panels')),group:group&&box(group),page:box(page),marginLeft:parseFloat(style.marginLeft),marginRight:parseFloat(style.marginRight),frameZ:+frame.zIndex,frameEvents:frame.pointerEvents,
                 panelFrame:panelFrame&&{width:parseFloat(panelFrame.width),height:parseFloat(panelFrame.height),events:panelFrame.pointerEvents,topLeft:panelFrame.borderTopLeftRadius,topRight:panelFrame.borderTopRightRadius},
                 border:{left:border.left,right:border.right,events:border.pointerEvents,topLeft:border.borderTopLeftRadius,topRight:border.borderTopRightRadius}};
         })()`);
         const togglePanel=async()=>{
-            const point=await evaluateHere(`(()=>{const r=document.querySelector('#switch button[data-name="PanelBookmarks"]').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2};})()`);
+            let point=await evaluateHere(`(()=>{const r=document.querySelector('#switch button[data-name="PanelBookmarks"]').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2};})()`);
             await call('Input.dispatchMouseEvent',{type:'mouseMoved',...point},sessionId);
+            // Hover and side changes can update the strip layout before the click.
+            await evaluateHere("new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))");
+            point=await evaluateHere(`(()=>{const r=document.querySelector('#switch button[data-name="PanelBookmarks"]').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2};})()`);
             await call('Input.dispatchMouseEvent',{type:'mousePressed',button:'left',clickCount:1,...point},sessionId);
             await call('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,...point},sessionId);
         };
@@ -102,9 +105,14 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
                         assert.equal(s.panelFrame[side==='left'?'topLeft':'topRight'],'8px','Panel corners must follow its side');
                         await setPanelOpen(false);
                         const closed=await metrics();
+                        assert.ok(closed.strip.x>=closed.clip.x-.01&&closed.strip.right<=closed.clip.right+.01,'Closed panel must not clip the rounded Ribbon strip');
+                        assert.ok(closed.strip.x>=closed.panels.x-.01&&closed.strip.right<=closed.panels.right+.01,'Closed container must reserve space for the whole strip');
                         assert.ok(closed.page.width>s.page.width+200||overlay,'Closing a docked panel must return space to the page');
-                        assert.equal(closed.marginLeft,s.marginLeft,'Opening panels must preserve the page frame spacing');
-                        assert.equal(closed.marginRight,s.marginRight,'Opening panels must preserve the page frame spacing');
+                        const outerGap=side==='left'?closed.strip.x-closed.main.x:closed.main.right-closed.strip.right;
+                        const pageGap=side==='left'?closed.page.x-closed.strip.right:closed.strip.x-closed.page.right;
+                        assert.ok(Math.abs(outerGap-pageGap)<.1,'Closed Ribbon strip must have equal outer and page-side gaps');
+                        assert.equal(closed.marginLeft,side==='left'?s.marginLeft/2:s.marginLeft);
+                        assert.equal(closed.marginRight,side==='right'?s.marginRight/2:s.marginRight);
                     });
                 }
             }
@@ -118,14 +126,17 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
                 await evaluateHere(`document.getElementById('browser').style.setProperty('--radius','${value}px')`);
                 await delay(600);
                 const s=await metrics();
-                assert.equal(s.marginLeft,value/2);assert.equal(s.marginRight,value/2);
+                assert.ok(s.strip.x>=s.clip.x-.01&&s.strip.right<=s.clip.right+.01,'Rounded strip must fit the native clipping container at every radius');
+                assert.equal(s.marginLeft,value/4);assert.equal(s.marginRight,value/2);
                 assert.equal(s.frameZ,15);assert.equal(s.frameEvents,'none');
             });
         }
         await evaluateHere(`document.getElementById('browser').style.setProperty('--radius',${JSON.stringify(radius)})`);
         await check('Ribbon floating panels also work without the edge mod',async()=>{
             await evaluateHere("document.querySelector('style[data-review-file=\"edge-like-border.css\"]').disabled=true");
-            await pref('vivaldi.panels.position','right');await setPanelOpen(true);
+            await pref('vivaldi.panels.position','right');
+            await wait("document.getElementById('panels-container').classList.contains('right')");
+            await setPanelOpen(true);
             const s=await metrics();
             assert.ok(s.group.width>250&&s.group.x>=0&&s.group.right<=s.viewport,'Ribbon offsets need a valid fallback');
             await setPanelOpen(false);

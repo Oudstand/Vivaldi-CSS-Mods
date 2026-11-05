@@ -9,6 +9,17 @@
     --address-bar-min-width: 20rem;
     --address-bar-width: 25vw;
     --address-bar-width-focused: 40vw;
+    --address-bar-duration: 0.2s;
+}
+
+#browser.animation-off {
+    --address-bar-duration: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #app {
+        --address-bar-duration: 0s;
+    }
 }
 
 .maximized #header {
@@ -88,10 +99,10 @@
         margin-inline: 2px 0.5rem;
         margin-inline-end: calc(0.5rem + var(--address-bar-rest-width) - var(--address-bar-target-width));
         transition:
-            width 0.2s ease-in-out,
-            margin-inline-end 0.2s ease-in-out,
-            height 0.2s ease-in-out,
-            box-shadow 0.2s ease-in-out,
+            width var(--address-bar-duration) ease-in-out,
+            margin-inline-end var(--address-bar-duration) ease-in-out,
+            height var(--address-bar-duration) ease-in-out,
+            box-shadow var(--address-bar-duration) ease-in-out,
             background-color var(--ribbon-color-duration, 0.5s),
             color var(--ribbon-color-duration, 0.5s) !important;
 

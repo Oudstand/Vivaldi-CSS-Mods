@@ -23,6 +23,7 @@
     --ribbon-theme-background-color: color-mix(in srgb, var(--colorAccentBg) var(--ribbon-accent-share), var(--ribbon-mix-color));
     --ribbon-theme-foreground-color: var(--colorAccentFg);
     --ribbon-color-duration: 0.5s;
+    --ribbon-panel-strip-width: 41px;
 }
 
 /* Choose the foreground for the mixed background using the browser's native CSS function. */
@@ -80,7 +81,7 @@ footer,
 }
 
 #app:not(.fullscreen-listener-enabled) {
-    .bookmark-bar-top-off .inner > * {
+    #browser.bookmark-bar-top-off:not(.fullscreen, .popup) .inner > * {
         padding-top: calc(var(--edge-like-border-radius) / 4);
     }
 
@@ -180,18 +181,18 @@ footer,
 /* Keep the compact strip width without constraining docked panel content. */
 #browser:not(.fullscreen) #panels-container:is(.icons, .overlay) {
     .density-on & {
-        width: 41px !important;
+        width: var(--ribbon-panel-strip-width) !important;
 
-        --ribbon-panel-offset: calc(var(--edge-like-border-radius, 0px) / 2 + 41px);
+        --ribbon-panel-offset: calc(var(--edge-like-border-radius, 0px) / 2 + var(--ribbon-panel-strip-width));
     }
 
     .fullscreen-listener-enabled & {
-        width: 41px !important;
+        width: var(--ribbon-panel-strip-width) !important;
     }
 }
 
 #panels-container {
-    --ribbon-panel-offset: 41px;
+    --ribbon-panel-offset: var(--ribbon-panel-strip-width);
     background-color: var(--colorAccentBg);
 
     &.overlay.left .panel-group {
@@ -249,10 +250,6 @@ footer,
     .panel-group {
         .panel-collapse-guard {
             min-width: 100% !important;
-
-            /* .panel {
-                background-color: var(--ribbon-theme-background-color);
-            } */
         }
     }
 }

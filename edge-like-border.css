@@ -164,28 +164,23 @@
     }
 
     .bookmark-bar::after {
-        content: '';
-        position: absolute;
-        height: var(--edge-like-border-radius);
         left: 0;
         right: 0;
         bottom: calc(var(--edge-like-border-radius) * -1 - 1px);
-        border: calc(var(--edge-like-border-radius) / 2) solid var(--colorAccentBg);
-        border-bottom: none;
-        border-top-left-radius: calc(var(--edge-like-border-radius) * 2);
-        border-top-right-radius: calc(var(--edge-like-border-radius) * 2);
-        pointer-events: none;
-        z-index: -1;
     }
 }
 
 #app:not(.fullscreen-listener-enabled):has(#switch button[title='automate-bookmark-bar']) .bookmark-bar-top:not(:has(.toolbar-editor)) .bookmark-bar::after {
-    content: '';
-    position: absolute;
-    height: var(--edge-like-border-radius);
     left: calc(var(--edge-like-border-radius) / -3);
     right: calc(var(--edge-like-border-radius) / -2);
     bottom: calc(var(--edge-like-border-radius) * -1);
+}
+
+.fullscreen-listener-enabled #browser:not(.fullscreen) .bookmark-bar::after,
+#app:not(.fullscreen-listener-enabled):has(#switch button[title='automate-bookmark-bar']) .bookmark-bar-top:not(:has(.toolbar-editor)) .bookmark-bar::after {
+    content: '';
+    position: absolute;
+    height: var(--edge-like-border-radius);
     border: calc(var(--edge-like-border-radius) / 2) solid var(--colorAccentBg);
     border-bottom: none;
     border-top-left-radius: calc(var(--edge-like-border-radius) * 2);

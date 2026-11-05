@@ -62,7 +62,11 @@
     }
 }
 
-/** decrease opacity of radar widget on dashboard (https://radar.wo-cloud.com/desktop/rr/compact?wrx=52.283,7.433&wrm=10&wry=52.283,7.433&wro=true) */
-.dashboard-widget webview { /* [src*='radar.wo-cloud.com'] */
+/**
+ * decrease opacity of radar widget on dashboard (https://radar.wo-cloud.com/desktop/rr/compact?wrx=52.283,7.433&wrm=10&wry=52.283,7.433&wro=true)
+ * Widget webviews no longer expose a usable src, so match the persistent widget id
+ * (vivaldi.dashboard.widgets in Preferences). Recreating the widget assigns a new id.
+ */
+.dashboard-widget[data-id='a8bfbd89-e57f-47a9-8808-ca933623a303'] webview {
     opacity: 0.4;
 }

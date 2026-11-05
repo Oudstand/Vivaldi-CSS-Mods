@@ -57,8 +57,7 @@
         }
 
         /* Center the counter */
-        .fip-results:not([
-            style='display: none;']) {
+        .fip-results:not([style='display: none;']) {
             display: flex !important;
             align-items: center;
             height: 100%;

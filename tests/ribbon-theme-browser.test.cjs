@@ -108,6 +108,43 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
         await check('color transitions resume when animations are enabled',async()=>{
             assert.ok((await motion()).find(s=>s.selector==='#switch').duration.split(',').every(v=>parseFloat(v)===.5));
         });
+        const transitionsOf=selector=>evaluateHere(`(()=>{const s=getComputedStyle(document.querySelector(${JSON.stringify(selector)}));const d=s.transitionDuration.split(',').map(v=>parseFloat(v));return Object.fromEntries(s.transitionProperty.split(',').map((p,i)=>[p.trim(),d[i%d.length]]));})()`);
+        const inactivePanelButton="#switch .button-toolbar:not(.active, .toolbar-divider, .toolbar-spacer, .toolbar-spacer-flexible)";
+        const reducedMotion=async run=>{
+            await call('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]},sessionId);
+            try{await run();}finally{await call('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]},sessionId);}
+        };
+        await check('inactive panel buttons keep hover and Ribbon color transitions',async()=>{
+            const t=await transitionsOf(inactivePanelButton);
+            assert.equal(t.opacity,.25);
+            for(const property of ['background-color','border-color','color'])assert.equal(t[property],.5,`${property} must follow Ribbon`);
+            await reducedMotion(async()=>{for(const [property,duration] of Object.entries(await transitionsOf(inactivePanelButton)))assert.equal(duration,0,`${property} must respect motion settings`);});
+        });
+        await check('automated bookmark bar and merged address field respect motion settings',async()=>{
+            await evaluateHere("(()=>{const b=document.createElement('button');b.id='automate-fixture';b.title='automate-bookmark-bar';document.getElementById('switch').append(b);})()");
+            try{
+                const moving=await transitionsOf('.bookmark-bar');
+                assert.ok(moving.transform>0&&moving.opacity>0,'Bookmark bar must animate by default');
+                await reducedMotion(async()=>{
+                    for(const [property,duration] of Object.entries(await transitionsOf('.bookmark-bar')))assert.equal(duration,0,`bookmark bar ${property} must respect motion settings`);
+                    const field=await transitionsOf('.toolbar-tabbar-before > .UrlBar-AddressField');
+                    for(const [property,duration] of Object.entries(field))assert.equal(duration,0,`address field ${property} must respect motion settings`);
+                });
+            }finally{await evaluateHere("document.getElementById('automate-fixture').remove()");}
+        });
+        await check('Pacman keeps its shape when Vivaldi disables animations',async()=>{
+            await evaluateHere(`(()=>{const f=document.createElement('div');f.id='motion-fixture';f.innerHTML='<div class="panel downloads"><div class="DownloadItem-ProgressBar visible loading"></div></div>';document.getElementById('browser').append(f);})()`);
+            try{await reducedMotion(async()=>{
+                const pacman=await evaluateHere(`(()=>{const s=getComputedStyle(document.querySelector('#motion-fixture .DownloadItem-ProgressBar'),'::before');return {duration:s.animationDuration,mask:s.webkitMaskImage||s.maskImage};})()`);
+                assert.equal(pacman.duration,'0s');
+                assert.match(pacman.mask,/^url\(/,'Pacman needs a static mask without animation');
+            });}finally{await evaluateHere("document.getElementById('motion-fixture').remove()");}
+        });
+        await check('only the radar widget is dimmed on the dashboard',async()=>{
+            await evaluateHere(`(()=>{const f=document.createElement('div');f.id='widget-fixture';f.innerHTML='<div class="dashboard-widget" data-id="a8bfbd89-e57f-47a9-8808-ca933623a303"><webview></webview></div><div class="dashboard-widget" data-id="other"><webview></webview></div>';document.getElementById('browser').append(f);})()`);
+            try{assert.deepEqual(await evaluateHere("[...document.querySelectorAll('#widget-fixture webview')].map(v=>getComputedStyle(v).opacity)"),['0.4','1']);}
+            finally{await evaluateHere("document.getElementById('widget-fixture').remove()");}
+        });
         await pref('vivaldi.tabs.stacking.auto_editor',false);await pref('vivaldi.tabs.stacking.mode','dotted');
         await evaluateHere(`(async()=>{const tabs=[];for(let i=0;i<3;i++)tabs.push(await chrome.tabs.create({windowId:vivaldiWindowId,url:'about:blank#ribbon-'+i,active:true}));return vivaldi.tabsPrivate.move({tabIds:tabs.map(t=>t.id),target:tabs[0].id,tweaks:['do-not-reparent','create-new-group'],debug:'Ribbon regression test'});})()`);
         await wait("!!document.querySelector('.tab-group-indicator')");

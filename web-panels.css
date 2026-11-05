@@ -39,14 +39,6 @@
     }
 }
 
-/* .webpanel {
-    background-color: var(--colorAccentBg);
-}
-
-.webpanel-header {
-    background-color: var(--colorBgAlphaBlur);
-} */
-
 #browser:not(.toolbar-edit-mode) .button-toolbar:has(button[title='automate-bookmark-bar']) {
     display: none;
 }
@@ -55,11 +47,34 @@
 .dial,
 #switch .button-toolbar:not(.active, .toolbar-divider) {
     opacity: 0.66 !important;
-    transition: opacity 0.25s !important;
 }
 
-.dial:hover,
-#switch .button-toolbar:hover {
+.dial {
+    transition: opacity var(--panel-hover-duration, 0.25s) !important;
+}
+
+/* Must list the Ribbon color transitions too: this rule wins over the one in ribbon-theme.css. */
+#switch .button-toolbar:not(.active, .toolbar-divider) {
+    transition:
+        opacity var(--panel-hover-duration, 0.25s),
+        background-color var(--ribbon-color-duration, 0s),
+        border-color var(--ribbon-color-duration, 0s),
+        color var(--ribbon-color-duration, 0s) !important;
+}
+
+#browser.animation-off {
+    --panel-hover-duration: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #browser {
+        --panel-hover-duration: 0s;
+    }
+}
+
+/* :focus-visible keeps a clicked button from staying highlighted. */
+.dial:is(:hover, :focus-visible, :has(:focus-visible)),
+#switch .button-toolbar:is(:hover, :has(:focus-visible)) {
     opacity: 1 !important;
 }
 

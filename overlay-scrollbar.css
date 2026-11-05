@@ -24,22 +24,19 @@
 
 /* 6px sichtbarer Thumb (12px - 2*3px border = 6px) */
 #browser *::-webkit-scrollbar-thumb {
-    background: rgba(128, 128, 128, 0.5);
+    background-color: color-mix(in srgb, var(--colorFg) 35%, transparent);
     border-radius: 6px;
     border: 3px solid transparent;
     background-clip: padding-box;
 }
 
+/* Mischt zur Vordergrundfarbe, damit Hover und Active in hellen und dunklen Themes stärker werden. */
 #browser *::-webkit-scrollbar-thumb:hover {
-    background: rgba(100, 100, 100, 0.8);
-    border: 3px solid transparent;
-    background-clip: padding-box;
+    background-color: color-mix(in srgb, var(--colorFg) 55%, transparent);
 }
 
 #browser *::-webkit-scrollbar-thumb:active {
-    background: rgba(80, 80, 80, 0.9);
-    border: 3px solid transparent;
-    background-clip: padding-box;
+    background-color: color-mix(in srgb, var(--colorFg) 75%, transparent);
 }
 
 #browser *::-webkit-scrollbar-corner {

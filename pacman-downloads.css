@@ -21,6 +21,7 @@
                 position: absolute;
                 z-index: 1;
                 inset: 0;
+                -webkit-mask-image: var(--pacman-open); /* Vivaldi reduces animations to 0s; without this the bar turns solid yellow. */
                 -webkit-animation: wagawaga var(--pacman-waga-ms) infinite;
                 -webkit-mask-repeat: no-repeat;
                 -webkit-mask-position-x: calc(var(--progress) * 100%);

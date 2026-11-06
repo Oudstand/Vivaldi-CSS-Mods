@@ -34,12 +34,13 @@
             }
         }
 
-        /* Match the page-side gap to the strip's outer quarter-radius margin. */
-        .inner:has(#panels-container.left.icons:not(.switcher)) #webpage-stack {
+        /* Match the page-side gap to the strip's outer quarter-radius margin.
+           The fullscreen mod hides the strip, so it keeps the regular half-radius frame. */
+        #app:not(.fullscreen-listener-enabled) & .inner:has(#panels-container.left.icons:not(.switcher)) #webpage-stack {
             margin-left: calc(var(--edge-like-border-radius) / 4) !important;
         }
 
-        .inner:has(#panels-container.right.icons:not(.switcher)) #webpage-stack {
+        #app:not(.fullscreen-listener-enabled) & .inner:has(#panels-container.right.icons:not(.switcher)) #webpage-stack {
             margin-right: calc(var(--edge-like-border-radius) / 4) !important;
         }
 

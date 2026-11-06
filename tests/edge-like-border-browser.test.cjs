@@ -216,6 +216,8 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
                 else assert.ok(Math.min(...xs)<s.panels.x,'Frame must face the page');
                 assert.equal(s.border[side==='left'?'topLeft':'topRight'],'16px');
                 assert.equal(s.border.events,'none');
+                // The hidden strip must not shrink the page frame on its side.
+                assert.equal(s.marginLeft,s.marginRight,'Fullscreen mod must keep an even page frame');
             });
         }
         console.log(`${passed} native Vivaldi regression cases passed.`);
